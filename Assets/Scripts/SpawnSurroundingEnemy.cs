@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpawnSurroundingEnemy : MonoBehaviour {
 
-    //bullet instantiation
+    //enemy instantiation
     public Rigidbody2D enemy;
 
     //distance from player when spawning
@@ -13,7 +13,7 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
     private float enemyCount = 0.0f;
 
     //Spawn Rate - how long does it take for another enemy to spawn
-    public float spawn = 1;
+    public float spawnRate = 1;
     //Timer
     private float timer;
     // Use this for initialization
@@ -23,12 +23,11 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Time.time > timer + spawn)
+        if(Time.time > timer + spawnRate)
         {
             SpawnEnemy();
             timer = Time.time;
         }
-
     }
 
     //Spawn a new enemy in a surrounding area
@@ -50,8 +49,6 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
         //direction the bullet is going to travel
         Vector2 targetDirection = new Vector2(targetPosition.x, targetPosition.y);
 
-        //set the bullet instance's direction its actual path
-        //enemyInstance.velocity = targetDirection;
     }
 
     float[] GenerateRandomPosition()

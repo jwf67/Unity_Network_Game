@@ -40,6 +40,7 @@ public class EnemyScript : MonoBehaviour {
         }
     }
 
+    //using the numbers passed in get the positive or negative direction of travel
     int GetMovementDirection(float a, float b)
     {
         if (a > b)

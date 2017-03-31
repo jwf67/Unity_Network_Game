@@ -8,7 +8,8 @@ public class PlayerScript : NetworkBehaviour {
     public float speed = 2.0f;
 
     //bullet instantiation
-    public Rigidbody2D bullet;
+    public GameObject bullet;
+    public Transform bulletSpawn;
 
     //bullet speed
     public float bulletSpeed = 4.0f;
@@ -55,11 +56,13 @@ public class PlayerScript : NetworkBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             //shoot the bullet
-            shootBullet();
+            CmdShootBullet();
         }
     }
 
-    void shootBullet()
+    //shoot bullet on network
+    [Command]
+    void CmdShootBullet()
     {
         //shots fired += 1
         shotsFired += 1;
@@ -76,7 +79,7 @@ public class PlayerScript : NetworkBehaviour {
         mousePosition = mousePosition - transform.position;
 
         //Create a new bullet instance
-        Rigidbody2D bulletInstance = Instantiate(bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+        var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
         //direction the bullet is going to travel
         Vector2 bulletDirection = new Vector2(mousePosition.x * speed, mousePosition.y * speed);
@@ -86,7 +89,13 @@ public class PlayerScript : NetworkBehaviour {
         Debug.Log(speed);
 
         //set the bullet instance's direction its actual path
-        bulletInstance.velocity = bulletDirection;
+        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletDirection;
+
+        //Bullet spawns on clients
+        NetworkServer.Spawn(bulletInstance);
+
+        //Bullet is deleted after 2 seconds
+        Destroy(bulletInstance, 2.0f);
     }
 
     //make the player's recognizable from the others

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class BulletScript : MonoBehaviour {
 
+    //damage the bullet deals
+    public int damage = 5;
+
     // Use this for initialization
     void Start () {
 	
@@ -14,13 +17,18 @@ public class BulletScript : MonoBehaviour {
         
     }
 
-
-    void OnTriggerEnter2D(Collider2D target)
+    void OnCollisionEnter(Collision collision)
     {
-        if(target.gameObject.tag == "enemy")
+        var hit = collision.gameObject;
+        var health = hit.GetComponent<EntityHealth>();
+
+        if(health != null)
         {
-            DestroyObject(gameObject);
+            health.takeDamage(damage);
         }
+
+        DestroyObject(gameObject);
+
     }
 
     //when the bullet is invisible destroy it
