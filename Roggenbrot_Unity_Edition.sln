@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggenbrot_Unity_Edition.CSharp", "Roggenbrot_Unity_Edition.CSharp.csproj", "{DDD420DC-56DC-EE30-654F-AD8DEDC08320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggenbrot_Unity_Edition.CSharp.Editor", "Roggenbrot_Unity_Edition.CSharp.Editor.csproj", "{7B5C63A9-1141-A5AE-169F-D18EC295C943}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDD420DC-56DC-EE30-654F-AD8DEDC08320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD420DC-56DC-EE30-654F-AD8DEDC08320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD420DC-56DC-EE30-654F-AD8DEDC08320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD420DC-56DC-EE30-654F-AD8DEDC08320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B5C63A9-1141-A5AE-169F-D18EC295C943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B5C63A9-1141-A5AE-169F-D18EC295C943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B5C63A9-1141-A5AE-169F-D18EC295C943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B5C63A9-1141-A5AE-169F-D18EC295C943}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
