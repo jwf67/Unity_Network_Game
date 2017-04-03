@@ -37,7 +37,9 @@ public class HealthPackScript : MonoBehaviour {
             health.restoreHealth(healAmt);
         }
 
-        DestroyObject(gameObject);
-
+        if (hit.tag == "player")
+        {
+            DestroyObject(gameObject);
+        }
     }
 }

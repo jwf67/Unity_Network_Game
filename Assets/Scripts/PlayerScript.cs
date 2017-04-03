@@ -101,6 +101,6 @@ public class PlayerScript : NetworkBehaviour {
     //make the player's recognizable from the others
     public override void OnStartLocalPlayer()
     {
-        
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0f, 1f);
     }
 }
