@@ -67,7 +67,7 @@ public class PlayerScript : NetworkBehaviour {
         //shots fired += 1
         shotsFired += 1;
 
-        //initialize mouse position on screen
+        //mouse position
         Vector3 mousePosition = Input.mousePosition;
 
         //make sure the mouse z position is 0. deal with x and y only
@@ -97,7 +97,6 @@ public class PlayerScript : NetworkBehaviour {
         //Bullet is deleted after 2 seconds
         Destroy(bulletInstance, 2.0f);
     }
-
     //make the player's recognizable from the others
     public override void OnStartLocalPlayer()
     {

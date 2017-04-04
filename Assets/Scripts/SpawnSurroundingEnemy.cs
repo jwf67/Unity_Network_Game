@@ -9,11 +9,9 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
     //distance from player when spawning
     public float distance = 10.0f;
 
-    //keep track of enemies spawned
-    private float enemyCount = 0.0f;
-
     //Spawn Rate - how long does it take for another enemy to spawn
     public float spawnRate = 1;
+
     //Timer
     private float timer;
     // Use this for initialization
@@ -55,7 +53,6 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
     {
         //x is at index 0, y is at index 1
         float[] x_and_y = new float[2];
-        Random rand = new Random();
 
         float x = Random.Range(-distance, distance);
 

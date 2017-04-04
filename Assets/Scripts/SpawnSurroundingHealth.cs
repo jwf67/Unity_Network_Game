@@ -48,8 +48,5 @@ public class SpawnSurroundingHealth : MonoBehaviour {
         //Create a new enemy instance
         Rigidbody2D objectInstance = Instantiate(health_pack, objectPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
         objectInstance.velocity = new Vector2(0, 0);
-        //direction of travel 
-        Vector2 targetDirection = new Vector2(targetPosition.x, targetPosition.y);
-
     }
 }
