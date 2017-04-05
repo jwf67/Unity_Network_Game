@@ -20,7 +20,6 @@ public class ObjectSpawnUtility : MonoBehaviour {
     {
         //x is at index 0, y is at index 1
         float[] x_and_y = new float[2];
-        Random rand = new Random();
 
         float x = Random.Range(-distance, distance);
 
@@ -38,7 +37,7 @@ public class ObjectSpawnUtility : MonoBehaviour {
         x_and_y[0] = x;
         x_and_y[1] = y;
 
-        Debug.Log(y);
+        //Debug.Log(y);
 
         return x_and_y;
     }

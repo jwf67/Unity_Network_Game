@@ -70,7 +70,7 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
         x_and_y[0] = x;
         x_and_y[1] = y;
 
-        Debug.Log(y);
+        //Debug.Log(y);
 
         return x_and_y;
     }
