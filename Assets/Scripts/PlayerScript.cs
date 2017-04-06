@@ -37,72 +37,47 @@ public class PlayerScript : NetworkBehaviour {
             return;
         }
 
-        //local player controls W, A, S, D
-        if (Input.GetKey(KeyCode.W))
+        //local player controls arrow keys
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             this.transform.position += Vector3.up * speed * Time.deltaTime; 
         }
-        if(Input.GetKey(KeyCode.S))
+        if(Input.GetKey(KeyCode.DownArrow))
         {
             this.transform.position += Vector3.down * speed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             this.transform.position += Vector3.left * speed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             this.transform.position += Vector3.right * speed * Time.deltaTime;
         }
-
-        //shoot object in direction of mouse
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKey(KeyCode.C))
         {
-            //shoot the bullet
-            if (isLocalPlayer)
-            {
-                CmdshootBulletHost();
-            }
-            else
-            {
-                RpcShootBulletClient();
-            }
+            this.transform.Rotate(0, 0, 2.5f);
+        }
+        if (Input.GetKey(KeyCode.V))
+        {
+            this.transform.Rotate(0, 0, -2.5f);
+        }
+        //shoot object in direction of character with spacebar
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CmdshootBullet();
         }
     }
 
-    //get mouse coordinates
-
     //shoot bullet on network
     [Command]
-    void CmdshootBulletHost()
+    void CmdshootBullet()
     {
-        //shots fired += 1
-        shotsFired += 1;
-
-        //mouse position of the player
-        Vector3 mousePosition = Input.mousePosition;
-
-        //make sure the mouse z position is 0. deal with x and y only
-        mousePosition.z = 0.0f;
-
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        //get the difference of the mouse position and the current object to create a vector
-        mousePosition = mousePosition - this.transform.position;
-
-        Debug.Log("H: (mp, tp): (" + mousePosition + ", " + this.transform.position + ")");
         //Create a new bullet instance
         var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
-        //direction the bullet is going to travel
-        Vector2 bulletDirection = new Vector2(mousePosition.x * speed, mousePosition.y * speed);
-
-        //Debug.Log("RMS");
-        //Debug.Log(mousePosition.x);
-        //Debug.Log(speed);
-
-        //set the bullet instance's direction its actual path
-        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletDirection;
+        //bullet will travel forward based on current transform position and rotation
+        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletInstance.transform.up * 6;
 
         //Bullet spawns on clients
         NetworkServer.Spawn(bulletInstance);
@@ -111,44 +86,6 @@ public class PlayerScript : NetworkBehaviour {
         Destroy(bulletInstance, 2.0f);
     }
 
-    [ClientRpc]
-    void RpcShootBulletClient()
-    {
-        //shots fired += 1
-        shotsFired += 1;
-
-        //mouse position of the player
-        Vector3 mousePosition = Input.mousePosition;
-
-        //make sure the mouse z position is 0. deal with x and y only
-        mousePosition.z = 0.0f;
-
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        //get the difference of the mouse position and the current object to create a vector
-        mousePosition = mousePosition - this.transform.position;
-
-        Debug.Log("H: (mp, tp): (" + mousePosition + ", " + this.transform.position + ")");
-
-        //Create a new bullet instance
-        var bulletInstance = (GameObject)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
-
-        //direction the bullet is going to travel
-        Vector2 bulletDirection = new Vector2(mousePosition.x * speed, mousePosition.y * speed);
-
-        //Debug.Log("RMS");
-        //Debug.Log(mousePosition.x);
-        //Debug.Log(speed);
-
-        //set the bullet instance's direction its actual path
-        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletDirection;
-
-        //Bullet spawns on clients
-        NetworkServer.Spawn(bulletInstance);
-
-        //Bullet is deleted after 2 seconds
-        Destroy(bulletInstance, 2.0f);
-    }
 
     //make the player's recognizable from the others
     public override void OnStartLocalPlayer()
