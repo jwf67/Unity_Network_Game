@@ -65,19 +65,19 @@ public class PlayerScript : NetworkBehaviour {
         //shoot object in direction of character with spacebar
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CmdshootBullet();
+            CmdShootBullet();
         }
     }
 
     //shoot bullet on network
     [Command]
-    void CmdshootBullet()
+    void CmdShootBullet()
     {
         //Create a new bullet instance
         var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
         //bullet will travel forward based on current transform position and rotation
-        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletInstance.transform.up * 6;
+        bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.up * 6;
 
         //Bullet spawns on clients
         NetworkServer.Spawn(bulletInstance);
@@ -85,7 +85,6 @@ public class PlayerScript : NetworkBehaviour {
         //Bullet is deleted after 2 seconds
         Destroy(bulletInstance, 2.0f);
     }
-
 
     //make the player's recognizable from the others
     public override void OnStartLocalPlayer()
