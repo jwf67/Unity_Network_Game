@@ -20,9 +20,6 @@ public class PlayerScript : NetworkBehaviour {
     //keep track of bullets shot
     private float shotsFired = 0.0f;
 
-    //mouse position of the player
-    Vector3 mousePosition;
-
     //transform position
     Vector3 transformPosition;
 
@@ -62,26 +59,28 @@ public class PlayerScript : NetworkBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             //shoot the bullet
-            CmdMouseCoords(Input.mousePosition, transform.position);
-            shootBullet();
+            if (isLocalPlayer)
+            {
+                CmdshootBulletHost();
+            }
+            else
+            {
+                RpcShootBulletClient();
+            }
         }
     }
 
     //get mouse coordinates
-    [Command]
-    public void CmdMouseCoords(Vector3 mP, Vector3 thisPosition)
-    {
-        mousePosition = mP;
-        Debug.Log("Mouse Position (X, Y): (" + mP.x + ", " + mP.y + ")");
-        transformPosition = thisPosition;
-        Debug.Log("Transform Position (X, Y): (" + thisPosition.x + ", " + thisPosition.y + ")");
-    }
 
     //shoot bullet on network
-    void shootBullet()
+    [Command]
+    void CmdshootBulletHost()
     {
         //shots fired += 1
         shotsFired += 1;
+
+        //mouse position of the player
+        Vector3 mousePosition = Input.mousePosition;
 
         //make sure the mouse z position is 0. deal with x and y only
         mousePosition.z = 0.0f;
@@ -89,8 +88,9 @@ public class PlayerScript : NetworkBehaviour {
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
         //get the difference of the mouse position and the current object to create a vector
-        mousePosition = mousePosition - transformPosition;
+        mousePosition = mousePosition - this.transform.position;
 
+        Debug.Log("H: (mp, tp): (" + mousePosition + ", " + this.transform.position + ")");
         //Create a new bullet instance
         var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
@@ -110,6 +110,46 @@ public class PlayerScript : NetworkBehaviour {
         //Bullet is deleted after 2 seconds
         Destroy(bulletInstance, 2.0f);
     }
+
+    [ClientRpc]
+    void RpcShootBulletClient()
+    {
+        //shots fired += 1
+        shotsFired += 1;
+
+        //mouse position of the player
+        Vector3 mousePosition = Input.mousePosition;
+
+        //make sure the mouse z position is 0. deal with x and y only
+        mousePosition.z = 0.0f;
+
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        //get the difference of the mouse position and the current object to create a vector
+        mousePosition = mousePosition - this.transform.position;
+
+        Debug.Log("H: (mp, tp): (" + mousePosition + ", " + this.transform.position + ")");
+
+        //Create a new bullet instance
+        var bulletInstance = (GameObject)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+
+        //direction the bullet is going to travel
+        Vector2 bulletDirection = new Vector2(mousePosition.x * speed, mousePosition.y * speed);
+
+        //Debug.Log("RMS");
+        //Debug.Log(mousePosition.x);
+        //Debug.Log(speed);
+
+        //set the bullet instance's direction its actual path
+        bulletInstance.GetComponent<Rigidbody2D>().velocity = bulletDirection;
+
+        //Bullet spawns on clients
+        NetworkServer.Spawn(bulletInstance);
+
+        //Bullet is deleted after 2 seconds
+        Destroy(bulletInstance, 2.0f);
+    }
+
     //make the player's recognizable from the others
     public override void OnStartLocalPlayer()
     {
