@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class EntityHealth : MonoBehaviour {
+public class EntityHealth : NetworkBehaviour {
 
     //maximum health of the entity
     public const int MAX_HEALTH = 50;
 
     //health of the entity
+    [SyncVar]
     public int health = MAX_HEALTH;
 
 	// Use this for initialization
@@ -22,8 +24,14 @@ public class EntityHealth : MonoBehaviour {
     //take damage
     public void takeDamage(int amount)
     {
+        if (!isServer)
+        {
+            return;
+        }
+
         health -= amount;
 
+        Debug.Log("Health: " + health);
         if(health <= 0)
         {
             health = 0;
