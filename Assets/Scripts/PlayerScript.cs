@@ -64,6 +64,8 @@ public class PlayerScript : NetworkBehaviour {
         //shoot object in direction of character with spacebar
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             CmdShootBullet();
         }
     }

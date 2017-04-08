@@ -12,17 +12,13 @@ public class EntityHealth : NetworkBehaviour {
     [SyncVar(hook = "OnChangeHealth")]
     public int health = MAX_HEALTH;
 
+    //health bar
     public RectTransform healthBar;
 
-    // Use this for initialization
-    void Start () {
+    // Update is called once per frame
+    void Update () {
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
+    }
 
     //take damage
     public void takeDamage(int amount)
@@ -59,6 +55,6 @@ public class EntityHealth : NetworkBehaviour {
 
     void OnChangeHealth(int health)
     {
-        //healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
+        healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
     }
 }
