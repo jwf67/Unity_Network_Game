@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EntityHealth : NetworkBehaviour {
@@ -8,12 +9,14 @@ public class EntityHealth : NetworkBehaviour {
     public const int MAX_HEALTH = 50;
 
     //health of the entity
-    [SyncVar]
+    [SyncVar(hook = "OnChangeHealth")]
     public int health = MAX_HEALTH;
 
-	// Use this for initialization
-	void Start () {
-	
+    public RectTransform healthBar;
+
+    // Use this for initialization
+    void Start () {
+
 	}
 	
 	// Update is called once per frame
@@ -31,11 +34,13 @@ public class EntityHealth : NetworkBehaviour {
 
         health -= amount;
 
-        Debug.Log("Health: " + health);
-        if(health <= 0)
+        //Debug.Log("Health: " + health);
+
+        if (health <= 0)
         {
             health = 0;
             Debug.Log("object reached <= 0 health");
+            //Destroy(gameObject);
         }
     }
 
@@ -44,10 +49,16 @@ public class EntityHealth : NetworkBehaviour {
     {
         health += amount;
 
-        if(health >= MAX_HEALTH)
+
+        if (health >= MAX_HEALTH)
         {
             health = MAX_HEALTH;
             Debug.Log("Fully restored");
         }
+    }
+
+    void OnChangeHealth(int health)
+    {
+        //healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
     }
 }

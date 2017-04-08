@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerScript : NetworkBehaviour {
 
-    //speed of the bullet
+    //player's speed
     public float speed = 2.0f;
 
     //bullet instantiation
@@ -12,10 +12,7 @@ public class PlayerScript : NetworkBehaviour {
     public Transform bulletSpawn;
 
     //bullet speed
-    public float bulletSpeed = 4.0f;
-
-    //var distance
-    public float distance = 5.0f;
+    public float bulletSpeed = 2.0f;
 
     //keep track of bullets shot
     private float shotsFired = 0.0f;
@@ -57,10 +54,12 @@ public class PlayerScript : NetworkBehaviour {
         if (Input.GetKey(KeyCode.C))
         {
             this.transform.Rotate(0, 0, 2.5f);
+            Debug.Log("ROTATEA");
         }
         if (Input.GetKey(KeyCode.V))
         {
             this.transform.Rotate(0, 0, -2.5f);
+            Debug.Log("ROTATEB");
         }
         //shoot object in direction of character with spacebar
         if (Input.GetKeyDown(KeyCode.Space))
@@ -77,7 +76,7 @@ public class PlayerScript : NetworkBehaviour {
         var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
         //bullet will travel forward based on current transform position and rotation
-        bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.up * 6;
+        bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.up * bulletSpeed;
 
         //Bullet spawns on clients
         NetworkServer.Spawn(bulletInstance);
