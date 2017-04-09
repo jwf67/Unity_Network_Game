@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerScript : NetworkBehaviour {
-
+public class NonNetworkPlayerScript : MonoBehaviour
+{
     //player's speed
     public float speed = 2.0f;
 
@@ -19,25 +18,20 @@ public class PlayerScript : NetworkBehaviour {
     Vector3 transformPosition;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         Debug.Log("START GAME");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
-        //only the local player should be controlled
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-
+    // Update is called once per frame
+    void Update()
+    {
         //local player controls arrow keys
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            this.transform.position += Vector3.up * speed * Time.deltaTime; 
+            this.transform.position += Vector3.up * speed * Time.deltaTime;
         }
-        if(Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             this.transform.position += Vector3.down * speed * Time.deltaTime;
         }
@@ -64,30 +58,20 @@ public class PlayerScript : NetworkBehaviour {
         {
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            CmdShootBullet();
+            shootBullet();
         }
     }
 
-    //shoot bullet on network
-    [Command]
-    void CmdShootBullet()
+    //shoot bullet off network
+    void shootBullet()
     {
         //Create a new bullet instance
-        var bulletInstance = (GameObject) Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        var bulletInstance = (GameObject)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 
         //bullet will travel forward based on current transform position and rotation
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.up * bulletSpeed;
 
-        //Bullet spawns on clients
-        NetworkServer.Spawn(bulletInstance);
-
         //Bullet is deleted after 2 seconds
         Destroy(bulletInstance, 2.0f);
-    }
-
-    //make the player's recognizable from the others
-    public override void OnStartLocalPlayer()
-    {
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0f, 1f);
     }
 }

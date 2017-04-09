@@ -28,15 +28,15 @@ public class EnemyScript : MonoBehaviour {
         transform.Translate(new Vector3(dirX * speed, dirY * speed, 0));
     }
 
-    void OnTriggerEnter2D(Collider2D target)
+    void OnTriggerEnter(Collider other)
     {
-        if (target.gameObject.tag == "player_bullet")
+        if (other.gameObject.tag == "player_bullet")
         {
             DestroyObject(gameObject);
-        }
-
-        if(target.gameObject.tag == "enemy")
+        } else if (other.gameObject.tag == "player")
         {
+            //other.gameObject.GetComponent<NonNetworkEntityHealth>().health -= 10;
+            Debug.Log("collision with player");
         }
     }
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class SpawnSurroundingEnemy : MonoBehaviour {
 
     //enemy instantiation
-    public Rigidbody2D enemy;
+    public Rigidbody enemy;
 
     //distance from player when spawning
     public float distance = 10.0f;
@@ -42,11 +42,8 @@ public class SpawnSurroundingEnemy : MonoBehaviour {
         Vector3 enemyPosition = new Vector3(enemy_xy[0], enemy_xy[1], 0.0f);
 
         //Create a new enemy instance
-        Rigidbody2D enemyInstance = Instantiate(enemy, enemyPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-        enemyInstance.velocity = new Vector2(0, 0);
-        //direction the bullet is going to travel
-        Vector2 targetDirection = new Vector2(targetPosition.x, targetPosition.y);
-
+        Rigidbody enemyInstance = Instantiate(enemy, enemyPosition, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody;
+        enemyInstance.velocity = new Vector3(0, 0, 0);
     }
 
     float[] GenerateRandomPosition()
