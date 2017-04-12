@@ -6,21 +6,27 @@ using System.Collections;
 public class PlayerScript : NetworkBehaviour {
 
     //player's speed
-    public float speed = 2.0f;
+    public float speed = CONSTANTS.PLAYER_SPEED;
+
+    //player's rotational speed
+    public float rSpeed = CONSTANTS.PLAYER_ROTATION_SPEED;
 
     //bullet instantiation
     public GameObject bullet;
     public Transform bulletSpawn;
 
     //bullet speed
-    public float bulletSpeed = 2.0f;
+    public float bulletSpeed = CONSTANTS.BULLET_SPEED;
+
+    //how long a bullet lasts in the world
+    public float bulletLifetime = CONSTANTS.BULLET_LIFETIME;
 
     //transform position
     Vector3 transformPosition;
 
     // Use this for initialization
     void Start () {
-        Debug.Log("START GAME");
+        
 	}
 	
 	// Update is called once per frame
@@ -51,13 +57,11 @@ public class PlayerScript : NetworkBehaviour {
         }
         if (Input.GetKey(KeyCode.C))
         {
-            this.transform.Rotate(0, 0, 2.5f);
-            Debug.Log("ROTATEA");
+            this.transform.Rotate(0, 0, rSpeed);
         }
         if (Input.GetKey(KeyCode.V))
         {
-            this.transform.Rotate(0, 0, -2.5f);
-            Debug.Log("ROTATEB");
+            this.transform.Rotate(0, 0, -rSpeed);
         }
         //shoot object in direction of character with spacebar
         if (Input.GetKeyDown(KeyCode.Space))
@@ -82,7 +86,7 @@ public class PlayerScript : NetworkBehaviour {
         NetworkServer.Spawn(bulletInstance);
 
         //Bullet is deleted after 2 seconds
-        Destroy(bulletInstance, 2.0f);
+        Destroy(bulletInstance, bulletLifetime);
     }
 
     //make the player's recognizable from the others
