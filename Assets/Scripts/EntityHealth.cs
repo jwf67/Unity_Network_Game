@@ -6,11 +6,11 @@ using System.Collections;
 public class EntityHealth : NetworkBehaviour {
 
     //maximum health of the entity
-    public const int MAX_HEALTH = 50;
+    public static int maxHealth = CONSTANTS.MAX_HEALTH;
 
     //health of the entity
     [SyncVar(hook = "OnChangeHealth")]
-    public int health = MAX_HEALTH;
+    public int health = maxHealth;
 
     //health bar
     public RectTransform healthBar;
@@ -48,9 +48,9 @@ public class EntityHealth : NetworkBehaviour {
         health += amount;
 
 
-        if (health >= MAX_HEALTH)
+        if (health >= maxHealth)
         {
-            health = MAX_HEALTH;
+            health = maxHealth;
             Debug.Log("Fully restored");
         }
     }

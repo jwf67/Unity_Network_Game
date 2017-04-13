@@ -4,7 +4,7 @@ using System.Collections;
 public class BulletScript : MonoBehaviour {
 
     //damage the bullet deals
-    public int damage = 5;
+    public int damage = CONSTANTS.BULLET_DAMAGE;
 
     // Use this for initialization
     void Start () {
