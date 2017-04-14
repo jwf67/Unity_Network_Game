@@ -5,14 +5,14 @@ using System.Collections;
 public class NonNetworkPlayerScript : MonoBehaviour
 {
     //player's speed
-    public float speed = 2.0f;
+    public float speed = CONSTANTS.PLAYER_SPEED;
 
     //bullet instantiation
     public GameObject bullet;
     public Transform bulletSpawn;
 
     //bullet speed
-    public float bulletSpeed = 2.0f;
+    public float bulletSpeed = CONSTANTS.BULLET_SPEED;
 
     //transform position
     Vector3 transformPosition;

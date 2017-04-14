@@ -6,7 +6,7 @@ public class NonNetworkEntityHealth : MonoBehaviour
 {
 
     //maximum health of the entity
-    public const int MAX_HEALTH = 50;
+    public const int MAX_HEALTH = CONSTANTS.MAX_HEALTH;
 
     //health of the entity
     public int health = MAX_HEALTH;

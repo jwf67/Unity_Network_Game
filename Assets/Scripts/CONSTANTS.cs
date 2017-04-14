@@ -16,4 +16,7 @@ public class CONSTANTS : MonoBehaviour {
 
     //ENTITY HEALTH
     public const int MAX_HEALTH = 50;
+
+    //ENEMY SPEED
+    public const float ENEMY_SPEED = 0.05f;
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyScript : MonoBehaviour {
 
     //speed variable
-    public float speed = 0.05f;
+    public float speed = CONSTANTS.ENEMY_SPEED;
 
 	// Use this for initialization
 	void Start () {
